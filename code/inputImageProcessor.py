@@ -103,8 +103,14 @@ class InputImageProcessor():
 				# put the cropped image into the result image
 				result[min_y:max_y, min_x:max_x, :] = crop_img
 			else:
+				result = np.zeros((self.output_height, self.output_width, 3), dtype=np.uint8) 
 				img = img[400:2100, 400:3400, :]
-				result = cv2.resize(img, (7680, 4320))
+				temp_result = cv2.resize(img, (1080, 720))
+				min_x = int(1920-540)
+				max_x = int(1920+540)
+				min_y = int(1080-360)
+				max_y = int(1080+360)
+				result[min_y:max_y, min_x:max_x,:] = temp_result
 			if sharpness:
 				sharpening_kernel = np.array(
 				[[-1, -1, -1],
